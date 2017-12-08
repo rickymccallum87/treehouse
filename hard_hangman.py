@@ -7,6 +7,8 @@ answer = random.choice(words.read().split())
 
 # track errors and guesses
 errors = 0
+error_max = len(answer)
+print('you are allowed ' + str(error_max) + ' mistakes')
 guesses = []
 
 while True:
@@ -34,7 +36,7 @@ while True:
 	else:
 		errors += 1
 		print('nope. ' + str(errors) + ' wrong guesses')
-		if errors > 5:
+		if errors > error_max:
 			print('you lose')
 			break
 
