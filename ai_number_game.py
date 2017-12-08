@@ -1,5 +1,5 @@
 # ask for number
-answer = int(input('secret number (1-10)? '))
+input('secret number (1-10)? ')
 
 # possible range
 between = [1,10]
