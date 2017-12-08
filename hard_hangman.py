@@ -1,4 +1,4 @@
-import random, io
+import random
 
 # randomly select from list of words
 words = open('hangman_wordlist.txt')
