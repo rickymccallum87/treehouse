@@ -19,10 +19,10 @@ def sing(alpha):
 			print('. ', end='')
 		elif th == 24:
 			print(' and ', end='')
+		elif th == 25:
+			print('!')
 		else:
 			print(' ', end='')
-			
-	print('\n')
 
 # sing abc's forward and backward
 sing(abc)
