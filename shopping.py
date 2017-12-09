@@ -18,8 +18,11 @@ help > see these instructions''')
 
 def display():
 	clear()
-	for i in items:
-		print(i)
+	index = 1
+	for item in items:
+		print('{}- {}'.format(index, item))
+		index += 1
+	print('\'' * 10)
 	
 def add(item):
 	items.append(item)
