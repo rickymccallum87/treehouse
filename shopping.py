@@ -1,4 +1,3 @@
-# add to desired index with .insert()
 import os
 
 items = []
@@ -22,11 +21,25 @@ def display():
 	for item in items:
 		print('{}- {}'.format(index, item))
 		index += 1
-	print('\'' * 10)
+	print('\'' * 20)
 	
 def add(item):
-	items.append(item)
 	display()
+	if items:
+		pos = input('{} goes where?\n> '.format(item))
+	else:
+		pos = 0
+	
+	try:
+		pos = abs(int(pos))
+	except ValueError:
+		pos = None
+		items.append(item)
+	else:
+		items.insert(pos-1, item)
+
+	display()
+	
 	print('{} added. {} items total'.format(item, len(items)))
 
 while True:
