@@ -16,8 +16,7 @@ def clear_screen():
 
 # pick random starting locations
 def get_locations():
-	player, monster, door = random.sample(CELLS, 3)
-	return player, monster, door
+	return random.sample(CELLS, 3)
 
 # take movement input
 def move_player(player, move):
@@ -31,8 +30,7 @@ def get_moves(player):
 	# bound moves between 0 and 4
 	return moves
 
-print(get_locations())
-
+player, monster, door = get_locations()
 while True:
 	print('Welcome!')
 	print('You\'re currently in room {}') # format player pos
