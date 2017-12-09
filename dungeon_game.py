@@ -11,10 +11,12 @@ CELLS = [(0,0), (1,0), (2,0), (3,0), (4,0),
 	 (0,0), (1,3), (2,3), (3,3), (4,3), 
 	 (0,0), (1,4), (2,4), (3,4), (4,4)]
 
+def clear_screen():
+	os.system('cls' if os.name == 'nt' else 'clear')
+
 # pick random starting locations
 def get_locations():
 	player, monster, door = random.sample(CELLS, 3)
-	print(player)
 	return player, monster, door
 
 # take movement input
@@ -33,7 +35,7 @@ print(get_locations())
 
 while True:
 	print('Welcome!')
-	print('You\'re currently in room ()') # format player pos
+	print('You\'re currently in room {}') # format player pos
 	print('You can move {}') # format available moves
 	print('Enter QUIT to quit')
 
