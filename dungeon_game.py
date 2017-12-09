@@ -1,8 +1,6 @@
 import random
 
 # draw player
-# take movement input
-# move player, within bounds
 # check for win/loss
 # clear screen and redraw grid
 
@@ -13,24 +11,25 @@ CELLS = [(0,0), (1,0), (2,0), (3,0), (4,0),
 	 (0,0), (1,3), (2,3), (3,3), (4,3), 
 	 (0,0), (1,4), (2,4), (3,4), (4,4)]
 
+# pick random starting locations
 def get_locations():
-	# pick random location for player
-	# pick random location for exit door
-	# pick random location for monster
-	player = None
-	monster = None
-	door = None
-	return monster, door, player
+	player, monster, door = random.sample(CELLS, 3)
+	print(player)
+	return player, monster, door
 
+# take movement input
 def move_player(player, move):
 	# get location
 	# move right/left (x) or up/down (y)
 	return player
 
+# move player, within bounds
 def get_moves(player):
 	moves = ['left', 'right', 'up', 'down']
 	# bound moves between 0 and 4
 	return moves
+
+print(get_locations())
 
 while True:
 	print('Welcome!')
@@ -48,3 +47,5 @@ while True:
 	# on door? win!
 	# on monster? lose!
 	# else loop
+
+
