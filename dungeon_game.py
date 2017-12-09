@@ -22,6 +22,16 @@ def get_locations():
 	door = None
 	return monster, door, player
 
+def move_player(player, move):
+	# get location
+	# move right/left (x) or up/down (y)
+	return player
+
+def get_moves(player):
+	moves = ['left', 'right', 'up', 'down']
+	# bound moves between 0 and 4
+	return moves
+
 while True:
 	print('Welcome!')
 	print('You\'re currently in room ()') # format player pos
