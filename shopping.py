@@ -27,7 +27,7 @@ def add(item):
 	print('{} added. {} items total'.format(item, len(items)))
 
 while True:
-	item = input('New item? ')
+	item = input('> ')
 	if item == 'done':
 		break
 	# show to print current list
