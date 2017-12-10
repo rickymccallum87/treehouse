@@ -1,21 +1,15 @@
 import os
 import random
 
-# draw the grid
-# CELLS = [(0,0), (1,0), (2,0), (3,0), (4,0),
-        # (0,1), (1,1), (2,1), (3,1), (4,1),
-        # (0,2), (1,2), (2,2), (3,2), (4,2),
-        # (0,3), (1,3), (2,3), (3,3), (4,3),
-        # (0,4), (1,4), (2,4), (3,4), (4,4)]
-CELLS = []
+dungeon = []
 
 
 # build user specified dungeon size
 def create_map(size):
-    global CELLS
+    global dungeon
     for i in range(size):
         for j in range(size):
-           CELLS.append((j, i))
+           dungeon.append((j, i))
 
 
 def clear_screen():
@@ -24,7 +18,7 @@ def clear_screen():
 
 # pick random starting locations
 def get_locations():
-    return random.sample(CELLS, 3)
+    return random.sample(dungeon, 3)
 
 
 # take movement input
@@ -62,7 +56,7 @@ def draw_map(player, map_size):
     print(' _' * map_size)
     tile = '|{}'
 
-    for cell in CELLS:
+    for cell in dungeon:
         x, y = cell
         if x < map_size - 1:
             line_end = ''
