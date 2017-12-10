@@ -2,18 +2,20 @@ import os
 import random
 
 # draw the grid
-CELLS = [(0,0), (1,0), (2,0), (3,0), (4,0), 
-     (0,0), (1,1), (2,1), (3,1), (4,1), 
-     (0,0), (1,2), (2,2), (3,2), (4,2), 
-     (0,0), (1,3), (2,3), (3,3), (4,3), 
-     (0,0), (1,4), (2,4), (3,4), (4,4)]
+CELLS = [(0,0), (1,0), (2,0), (3,0), (4,0),
+        (0,1), (1,1), (2,1), (3,1), (4,1),
+        (0,2), (1,2), (2,2), (3,2), (4,2),
+        (0,3), (1,3), (2,3), (3,3), (4,3),
+        (0,4), (1,4), (2,4), (3,4), (4,4)]
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+
 # pick random starting locations
 def get_locations():
     return random.sample(CELLS, 3)
+
 
 # take movement input
 def move_player(player, move):
@@ -28,6 +30,7 @@ def move_player(player, move):
 
     # move right/left (x) or up/down (y)
     return x+moveset[move][0], y+moveset[move][1]
+
 
 # move player, within bounds
 def get_moves(player):
@@ -44,12 +47,28 @@ def get_moves(player):
         moves.remove('down')
     return moves
 
+
 def draw_map(player):
     print(' _' * 5)
     tile = '|{}'
 
-    # for cell in CELLS:
-            
+    for cell in CELLS:
+        x, y = cell
+        # print(x,y,cell)
+        if x < 4:
+            line_end = ''
+            if cell == player:
+                output = tile.format('X')
+            else:
+                output = tile.format('_')
+        else:
+            line_end = '\n'
+            if cell == player:
+                output = tile.format('X|')
+            else:
+                output = tile.format('_|')
+        print(output, end=line_end)
+
 
 def game_loop():
     # set start positions
