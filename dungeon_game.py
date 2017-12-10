@@ -2,11 +2,21 @@ import os
 import random
 
 # draw the grid
-CELLS = [(0,0), (1,0), (2,0), (3,0), (4,0),
-        (0,1), (1,1), (2,1), (3,1), (4,1),
-        (0,2), (1,2), (2,2), (3,2), (4,2),
-        (0,3), (1,3), (2,3), (3,3), (4,3),
-        (0,4), (1,4), (2,4), (3,4), (4,4)]
+# CELLS = [(0,0), (1,0), (2,0), (3,0), (4,0),
+        # (0,1), (1,1), (2,1), (3,1), (4,1),
+        # (0,2), (1,2), (2,2), (3,2), (4,2),
+        # (0,3), (1,3), (2,3), (3,3), (4,3),
+        # (0,4), (1,4), (2,4), (3,4), (4,4)]
+CELLS = []
+
+
+# build user specified dungeon size
+def create_map(size):
+    global CELLS
+    for i in range(size):
+        for j in range(size):
+           CELLS.append((j, i))
+
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -33,29 +43,28 @@ def move_player(player, move):
 
 
 # limit player movement to map dimensions
-def get_moves(player):
+def get_moves(player, map_size):
     moves = ['left', 'right', 'up', 'down']
     x, y = player
     # bound moves between 0 and 4
     if x == 0:
         moves.remove('left')
-    if x == 4:
+    if x == map_size - 1:
         moves.remove('right')
     if y == 0:
         moves.remove('up')
-    if y == 4:
+    if y == map_size - 1:
         moves.remove('down')
     return moves
 
 
-def draw_map(player):
-    print(' _' * 5)
+def draw_map(player, map_size):
+    print(' _' * map_size)
     tile = '|{}'
 
     for cell in CELLS:
         x, y = cell
-        # print(x,y,cell)
-        if x < 4:
+        if x < map_size - 1:
             line_end = ''
             if cell == player:
                 output = tile.format('X')
@@ -71,12 +80,17 @@ def draw_map(player):
 
 
 def game_loop():
+    # allow player to size map
+    map_size = int(input('How long is each side of the dungeon? '))
+    create_map(map_size)
+    clear_screen()
+
     # set start positions
     player, monster, door = get_locations()
 
     while True:
-        draw_map(player)
-        valid_moves = get_moves(player)
+        draw_map(player, map_size)
+        valid_moves = get_moves(player, map_size)
         print('You\'re currently in room {}'.format(player))
         print('You can move {}'.format(', '.join(valid_moves)))
         print('Enter QUIT to quit')
