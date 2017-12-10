@@ -87,7 +87,17 @@ def game_loop():
         # good? change pos
         if move in valid_moves:
             player = move_player(player, move)
-            
+
+            # win/loss condition
+            if player == monster:
+                clear_screen()
+                print('You encountered the monster and were eaten!')
+                break
+            if player == door:
+                clear_screen()
+                print('You escaped the dungeon unharmed. Well done!')
+                break
+
         # bad? don't change
         else:
             input('''There's a wall there!''')
