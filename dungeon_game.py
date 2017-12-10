@@ -32,7 +32,7 @@ def move_player(player, move):
     return x+moveset[move][0], y+moveset[move][1]
 
 
-# move player, within bounds
+# limit player movement to map dimensions
 def get_moves(player):
     moves = ['left', 'right', 'up', 'down']
     x, y = player
@@ -87,6 +87,7 @@ def game_loop():
         # good? change pos
         if move in valid_moves:
             player = move_player(player, move)
+            
         # bad? don't change
         else:
             input('''There's a wall there!''')
