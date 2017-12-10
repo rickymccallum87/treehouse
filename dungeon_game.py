@@ -2,6 +2,7 @@ import os
 import random
 
 dungeon = []
+moves = ['left', 'right', 'up', 'down']
 
 
 # build user specified dungeon size
@@ -108,7 +109,11 @@ def game_loop():
 
         # bad? don't change
         else:
-            input('''There's a wall there!''')
+            global moves
+            if move in moves:
+                input('There\'s a wall there!')
+            else:
+                input('Movement not recognized')
 
         clear_screen()
 
