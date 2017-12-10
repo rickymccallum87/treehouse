@@ -20,18 +20,18 @@ def get_locations():
 	return random.sample(CELLS, 3)
 
 # take movement input
-def move_player(player, user_move):
+def move_player(player, move):
 	# get location
 	x, y = player
 
 	# translate user input into movement tuple
-	movement = {'left': (-1, 0),
+	moveset = {'left': (-1, 0),
 		   'right': ( 1, 0),
 		      'up': ( 0,-1),
 		    'down': ( 0, 1)}
 
 	# move right/left (x) or up/down (y)
-	return x+movement[user_move][0], y+movement[user_move][1]
+	return x+moveset[move][0], y+moveset[move][1]
 
 # move player, within bounds
 def get_moves(player):
@@ -48,28 +48,29 @@ def get_moves(player):
 		moves.remove('down')
 	return moves
 
-player, monster, door = get_locations()
-while True:
-	valid_moves = get_moves(player)
-	clear_screen()
-	print('Welcome!')
-	print('You\'re currently in room {}'.format(player))
-	print('You can move {}'.format(', '.join(valid_moves)))
-	print('Enter QUIT to quit')
+def game_loop():
+	player, monster, door = get_locations()
 
-	move = input('> ').lower()
-	
-	if move == 'quit':
-		break
-	# good? change pos
-	if move in valid_moves:
-		player = move_player(player, move)
-	# bad? don't change
-	else:
-		print('''There's a wall there!''')
+	while True:
+		valid_moves = get_moves(player)
+		clear_screen()
+		print('You\'re currently in room {}'.format(player))
+		print('You can move {}'.format(', '.join(valid_moves)))
+		print('Enter QUIT to quit')
 
-	# on door? win!
-	# on monster? lose!
-	# else loop
+		move = input('> ').lower()
+		
+		if move == 'quit':
+			break
+		# good? change pos
+		if move in valid_moves:
+			player = move_player(player, move)
+		# bad? don't change
+		else:
+			input('''There's a wall there!''')
 
-
+clear_screen()
+print('Welcome to the dungeon!')
+input('Press return to start!')
+clear_screen()
+game_loop()
