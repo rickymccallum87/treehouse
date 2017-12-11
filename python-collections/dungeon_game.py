@@ -25,7 +25,7 @@ def get_locations():
 # take movement input
 def move_player(player, move):
     # get location
-    x, y = player
+    x, y = player['location']
 
     # translate user input into movement tuple
     moveset = {'left': (-1, 0),
@@ -40,7 +40,7 @@ def move_player(player, move):
 # limit player movement to map dimensions
 def get_moves(player, map_size):
     moves = ['left', 'right', 'up', 'down']
-    x, y = player
+    x, y = player['location']
     # bound moves between 0 and 4
     if x == 0:
         moves.remove('left')
@@ -61,13 +61,13 @@ def draw_map(player, map_size):
         x, y = cell
         if x < map_size - 1:
             line_end = ''
-            if cell == player:
+            if cell == player['location']:
                 output = tile.format('X')
             else:
                 output = tile.format('_')
         else:
             line_end = '\n'
-            if cell == player:
+            if cell == player['location']:
                 output = tile.format('X|')
             else:
                 output = tile.format('_|')
@@ -79,14 +79,17 @@ def game_loop():
     map_size = int(input('How long is each side of the dungeon? '))
     create_map(map_size)
     clear_screen()
+    player = {'location': (0,0), 'visited': []}
 
     # set start positions
-    player, monster, door = get_locations()
+    player['location'], monster, door = get_locations()
+
+    input(player)
 
     while True:
         draw_map(player, map_size)
         valid_moves = get_moves(player, map_size)
-        print('You\'re currently in room {}'.format(player))
+        print('You\'re currently in room {}'.format(player['location']))
         print('You can move {}'.format(', '.join(valid_moves)))
         print('Enter QUIT to quit')
 
@@ -95,14 +98,14 @@ def game_loop():
             break
         # good? change pos
         if move in valid_moves:
-            player = move_player(player, move)
+            player['location'] = move_player(player, move)
 
             # win/loss condition
-            if player == monster:
+            if player['location'] == monster:
                 clear_screen()
                 print('You encountered the monster and were eaten!')
                 break
-            if player == door:
+            if player['location'] == door:
                 clear_screen()
                 print('You escaped the dungeon unharmed. Well done!')
                 break
