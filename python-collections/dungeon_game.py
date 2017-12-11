@@ -138,19 +138,26 @@ def game():
 # Welcome
 clear()
 print('Welcome to the dungeon!')
+scoreboard = [0,0] # [wins, losses]
 
 # Play multiple games
 while True:
+    print('Wins: ' + str(scoreboard[0]) + ' Losses: ' + str(scoreboard[1]))
     won = game()
     if won:
         again = input('Congratulations! Play again (Y/n)?\n> ')
-        clear()
-        print('You daringly enter another dungeon!')
+        scoreboard[0] += 1
     elif won == None:
         print('Goodbye.')
         break
     else:
         again = input('Oh well. Play again (Y/n)?\n> ')
+        scoreboard[1] += 1
     if again == 'n':
         print('Goodbye.')
         break
+    clear()
+    print('You daringly enter another dungeon!')
+
+# Display final result
+print('Wins: ' + str(scoreboard[0]) + ' Losses: ' + str(scoreboard[1]))
