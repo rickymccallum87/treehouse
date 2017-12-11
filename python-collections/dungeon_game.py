@@ -1,14 +1,14 @@
 import os, random
 
+# Clear screen
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 # Build list of (x, y) coordinates
 def create_map(size, dungeon):
     for i in range(size):
         for j in range(size):
            dungeon.append((j, i))
-
-# Clear screen
-def clear():
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 # Randomize unique starting positions
 def get_locations(dungeon):
@@ -81,7 +81,7 @@ def move_monster(monster, map_size):
         y = 0
     return x, y
 
-# Main game
+# Play a round
 def game():
     
     # Initialize new game
