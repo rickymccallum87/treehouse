@@ -1,47 +1,34 @@
-import os
-import random
+import os, random
 
-dungeon = []
-moves = ['left', 'right', 'up', 'down']
-
-
-# build user specified dungeon size
-def create_map(size):
-    global dungeon
+# Build list of (x, y) coordinates
+def create_map(size, dungeon):
     for i in range(size):
         for j in range(size):
            dungeon.append((j, i))
 
-
-def clear_screen():
+# Clear screen
+def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-
-# pick random starting locations
-def get_locations():
+# Randomize unique starting positions
+def get_locations(dungeon):
     return random.sample(dungeon, 3)
 
-
-# take movement input
+# Move relative to current position
 def move_player(player, move):
-    # get location
     x, y = player['location']
 
-    # translate user input into movement tuple
     moveset = {'left': (-1, 0),
               'right': ( 1, 0),
                  'up': ( 0,-1),
                'down': ( 0, 1)}
 
-    # move right/left (x) or up/down (y)
     return x+moveset[move][0], y+moveset[move][1]
 
-
-# limit player movement to map dimensions
+# Stop player from moving through walls
 def get_moves(player, map_size):
     moves = ['left', 'right', 'up', 'down']
     x, y = player['location']
-    # bound moves between 0 and 4
     if x == 0:
         moves.remove('left')
     if x == map_size - 1:
@@ -52,7 +39,7 @@ def get_moves(player, map_size):
         moves.remove('down')
     return moves
 
-
+# Move monster within map bounds, including diagonally
 def move_monster(monster, map_size):
     x = random.randint(-1,1)
     y = random.randint(-1,1)
@@ -68,7 +55,8 @@ def move_monster(monster, map_size):
         y = 0
     return x, y
 
-def draw_map(player, monster, map_size):
+# Show current state of dungeon grid
+def draw_map(dungeon, player, monster, map_size):
     print(' _' * map_size)
     tile = '|{}'
 
@@ -96,57 +84,78 @@ def draw_map(player, monster, map_size):
                 output = tile.format('_|')
         print(output, end=line_end)
 
+# Main game
+def game():
 
-def game_loop():
-    # allow player to size map
+    # Initialize new game
+    clear()
+    dungeon = []
     map_size = int(input('How long is each side of the dungeon? '))
-    create_map(map_size)
-    clear_screen()
+    create_map(map_size, dungeon)
+    clear()
     player = {'location': (0,0), 'visited': []}
-
-    # set start positions
-    player['location'], monster, door = get_locations()
+    player['location'], monster, door = get_locations(dungeon)
     player['visited'].append(player['location'])
 
+    # Gameplay loop
     while True:
-        draw_map(player, monster, map_size)
-        valid_moves = get_moves(player, map_size)
-        print('You\'re currently in room {}'.format(player['location']))
-        print('You can move {}'.format(', '.join(valid_moves)))
-        print('Enter QUIT to quit')
 
+        # Show current state
+        draw_map(dungeon, player, monster, map_size)
+        valid_moves = get_moves(player, map_size)
+
+        # Ask player for move
+        print('You\'re currently in room {}'.format(player['location']))
+        print('You can move {}'.format(', '.join(valid_moves)) + ' or (Q)uit')
         move = input('> ').lower()
-        if move == 'quit':
-            break
-        # good? change pos
+
+        # Quit
+        if move == 'q':
+            return
+
+        # Accept player's move
         if move in valid_moves:
             player['location'] = move_player(player, move)
             player['visited'].append(player['location'])
 
-            # win/loss condition
+            # Collision with other elements
             if player['location'] == monster:
-                clear_screen()
+                clear()
                 print('You encountered the monster and were eaten!')
-                break
+                return False # Report lost
             if player['location'] == door:
-                clear_screen()
-                print('You escaped the dungeon unharmed. Well done!')
-                break
-        # bad? don't change
+                clear()
+                print('You escaped the dungeon unharmed!')
+                return True # Report won
+
+        # Invalid move command
         else:
-            global moves
-            if move in moves:
+            if move in ['left', 'right', 'up', 'down']:
                 input('There\'s a wall there!')
             else:
                 input('Movement not recognized')
 
+        # Monster's turn to move
         monster = move_monster(monster, map_size)
-        clear_screen()
+        clear()
 
-
-# introduction
-clear_screen()
+# Welcome
+clear()
 print('Welcome to the dungeon!')
 input('Press return to start!')
-clear_screen()
-game_loop()
+
+# Play multiple games
+while True:
+    won = game()
+    
+    if won:
+        again = input('Congratulations! Play again (Y/n)?\n>')
+    elif won == None:
+        print('Goodbye.')
+        break
+    else:
+        again = input('Oh well. Play again (Y/n)?\n')
+
+    if again == 'n':
+        print('Goodbye.')
+        break
