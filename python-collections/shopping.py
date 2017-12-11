@@ -14,6 +14,7 @@ def instruct():
         'show > print list and continue',
         'move > reorder list items',
         'help > see these instructions',
+        'clear> delete all items',
         sep='\n')
 
 def display():
@@ -51,6 +52,12 @@ def move():
     clear()
     display()
 
+def restart():
+    global items
+    items = []
+    clear()
+    display()
+
 clear()
 instruct()
 
@@ -66,6 +73,8 @@ while True:
         instruct()
     elif item == 'move':
         move()
+    elif item == 'clear':
+        restart()
     else:
         add(item)
 
