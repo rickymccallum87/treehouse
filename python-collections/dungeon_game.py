@@ -63,12 +63,16 @@ def draw_map(player, map_size):
             line_end = ''
             if cell == player['location']:
                 output = tile.format('X')
+            elif cell in player['visited']:
+                output = tile.format('.')
             else:
                 output = tile.format('_')
         else:
             line_end = '\n'
             if cell == player['location']:
                 output = tile.format('X|')
+            elif cell in player['visited']:
+                output = tile.format('.|')
             else:
                 output = tile.format('_|')
         print(output, end=line_end)
@@ -83,8 +87,7 @@ def game_loop():
 
     # set start positions
     player['location'], monster, door = get_locations()
-
-    input(player)
+    player['visited'].append(player['location'])
 
     while True:
         draw_map(player, map_size)
@@ -99,6 +102,7 @@ def game_loop():
         # good? change pos
         if move in valid_moves:
             player['location'] = move_player(player, move)
+            player['visited'].append(player['location'])
 
             # win/loss condition
             if player['location'] == monster:
