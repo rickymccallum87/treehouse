@@ -17,12 +17,10 @@ def get_locations(dungeon):
 # Move relative to current position
 def move_player(player, move):
     x, y = player['location']
-
     moveset = {'left': (-1, 0),
               'right': ( 1, 0),
                  'up': ( 0,-1),
                'down': ( 0, 1)}
-
     return x+moveset[move][0], y+moveset[move][1]
 
 # Stop player from moving through walls
@@ -59,7 +57,6 @@ def move_monster(monster, map_size):
 def draw_map(dungeon, player, monster, map_size):
     print(' _' * map_size)
     tile = '|{}'
-
     for cell in dungeon:
         x, y = cell
         if x < map_size - 1:
@@ -88,9 +85,8 @@ def draw_map(dungeon, player, monster, map_size):
 def game():
 
     # Initialize new game
-    clear()
     dungeon = []
-    map_size = int(input('How long is each side of the dungeon? '))
+    map_size = int(input('How long is each side of the dungeon?\n> '))
     create_map(map_size, dungeon)
     clear()
     player = {'location': (0,0), 'visited': []}
@@ -131,9 +127,9 @@ def game():
         # Invalid move command
         else:
             if move in ['left', 'right', 'up', 'down']:
-                input('There\'s a wall there!')
+                input('There\'s a wall there!\n')
             else:
-                input('Movement not recognized')
+                input('Movement not recognized.\n')
 
         # Monster's turn to move
         monster = move_monster(monster, map_size)
@@ -142,20 +138,17 @@ def game():
 # Welcome
 clear()
 print('Welcome to the dungeon!')
-input('Press return to start!')
 
 # Play multiple games
 while True:
     won = game()
-    
     if won:
-        again = input('Congratulations! Play again (Y/n)?\n>')
+        again = input('Congratulations! Play again (Y/n)?\n> ')
     elif won == None:
         print('Goodbye.')
         break
     else:
-        again = input('Oh well. Play again (Y/n)?\n')
-
+        again = input('Oh well. Play again (Y/n)?\n> ')
     if again == 'n':
         print('Goodbye.')
         break
