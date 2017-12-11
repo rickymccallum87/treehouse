@@ -53,6 +53,21 @@ def get_moves(player, map_size):
     return moves
 
 
+def move_monster(monster, map_size):
+    x = random.randint(-1,1)
+    y = random.randint(-1,1)
+    x += monster[0]
+    y += monster[1]
+    if x > map_size-1:
+        x = map_size-1
+    if y > map_size-1:
+        y = map_size-1
+    if x < 0:
+        x = 0
+    if y < 0:
+        y = 0
+    return x, y
+
 def draw_map(player, monster, map_size):
     print(' _' * map_size)
     tile = '|{}'
@@ -117,7 +132,6 @@ def game_loop():
                 clear_screen()
                 print('You escaped the dungeon unharmed. Well done!')
                 break
-
         # bad? don't change
         else:
             global moves
@@ -126,6 +140,7 @@ def game_loop():
             else:
                 input('Movement not recognized')
 
+        monster = move_monster(monster, map_size)
         clear_screen()
 
 
