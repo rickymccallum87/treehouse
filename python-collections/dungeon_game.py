@@ -144,6 +144,8 @@ while True:
     won = game()
     if won:
         again = input('Congratulations! Play again (Y/n)?\n> ')
+        clear()
+        print('You daringly enter another dungeon!')
     elif won == None:
         print('Goodbye.')
         break
