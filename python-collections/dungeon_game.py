@@ -53,7 +53,7 @@ def get_moves(player, map_size):
     return moves
 
 
-def draw_map(player, map_size):
+def draw_map(player, monster, map_size):
     print(' _' * map_size)
     tile = '|{}'
 
@@ -63,6 +63,8 @@ def draw_map(player, map_size):
             line_end = ''
             if cell == player['location']:
                 output = tile.format('X')
+            elif cell == monster:
+                output = tile.format('!')
             elif cell in player['visited']:
                 output = tile.format('.')
             else:
@@ -71,6 +73,8 @@ def draw_map(player, map_size):
             line_end = '\n'
             if cell == player['location']:
                 output = tile.format('X|')
+            elif cell == monster:
+                output = tile.format('!|')
             elif cell in player['visited']:
                 output = tile.format('.|')
             else:
@@ -90,7 +94,7 @@ def game_loop():
     player['visited'].append(player['location'])
 
     while True:
-        draw_map(player, map_size)
+        draw_map(player, monster, map_size)
         valid_moves = get_moves(player, map_size)
         print('You\'re currently in room {}'.format(player['location']))
         print('You can move {}'.format(', '.join(valid_moves)))
