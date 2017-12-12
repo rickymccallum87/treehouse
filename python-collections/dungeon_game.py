@@ -142,7 +142,7 @@ scoreboard = [0,0] # [wins, losses]
 
 # Play multiple games
 while True:
-    print('Wins: ' + str(scoreboard[0]) + ' Losses: ' + str(scoreboard[1]))
+    print('Wins: {} | Losses: {}'.format(str(scoreboard[0]), str(scoreboard[1])))
     won = game()
     if won:
         again = input('Congratulations! Play again (Y/n)?\n> ')
